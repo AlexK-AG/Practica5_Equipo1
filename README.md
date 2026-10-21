@@ -55,7 +55,7 @@ La escena inicial es `scenes/start.tscn`. No es necesario crear tablas, configur
 
 La configuración permite reasignar controles y ajustar audio, sensibilidad, dificultad, pantalla y opciones visuales.
 
-### Game feel y retroalimentación
+## Game feel y retroalimentación
 
 #### Input buffering
 
