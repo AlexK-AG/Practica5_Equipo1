@@ -16,6 +16,7 @@ El proyecto incluye **persistencia local en SQLite**, un **leaderboard por perfi
 - **Coberturas, cajas dobles y búsqueda enemiga:** los enemigos reaccionan a obstáculos, aliados y pérdida de visión.
 - **Checkpoints, pausa y tres dificultades:** Fácil, Normal y Difícil.
 - **Entrenamiento opcional de 28 pasos**, que explica HUD, controles, interacción, combate y coberturas.
+- **Feedback audiovisual de combate y movimiento**, con balanceo de cámara, vibración de explosiones, señales de impacto, colores por arma y sonidos reactivos.
 
 Las bajas ayudan a asegurar sectores, pero **cada nivel se completa cumpliendo sus objetivos**, no únicamente eliminando enemigos.
 
@@ -53,6 +54,31 @@ La escena inicial es `scenes/start.tscn`. No es necesario crear tablas, configur
 | Pausa | Esc |
 
 La configuración permite reasignar controles y ajustar audio, sensibilidad, dificultad, pantalla y opciones visuales.
+
+### Game feel y retroalimentación
+
+#### Input buffering
+
+- El salto conserva la pulsación durante **0,12 segundos**. Si se pulsa justo antes de aterrizar, se ejecuta al tocar el suelo.
+- El buffer solo se aplica al salto; los ataques no guardan entradas pendientes.
+
+#### Coyote time
+
+- **No está implementado.** El jugador no puede iniciar un salto después de haber dejado el borde de una plataforma; debe estar en el suelo o dentro de la ventana de input buffering.
+
+#### Screenshake y movimiento de cámara
+
+- La cámara tiene un balanceo leve al caminar, algo más marcado al correr. Es un movimiento rítmico de pasos, separado de las vibraciones por impactos.
+- Las granadas hacen vibrar la cámara según la distancia: la de fragmentación usa la intensidad mayor; la básica y la de estasis tienen vibraciones más suaves. La opción **Movimiento reducido** desactiva ambos efectos de cámara.
+- Actualmente no se añade screenshake al recibir daño ni al aterrizar.
+
+#### Feedback visual, sonoro y de interfaz
+
+- **HUD:** muestra vida, escudo, arma, cargador, reserva, granadas, bajas, tiempo y objetivo activo. También indica recarga, munición agotada y estado de regeneración; los cambios de objetivo aparecen en una notificación temporal.
+- **Señales visuales de combate:** el disparo produce destello y retroceso del arma/cámara; el impacto en un enemigo convierte brevemente la mira en una “×” ámbar. Los rayos identifican el arma: violeta para plasma, naranja para precisión y cian para las demás.
+- **Daño y estados:** recibir daño produce un destello rojo. Bajo el 50 % de la vida máxima aparece una nube roja en los bordes, que crece al bajar la salud; el HUD resalta vida crítica bajo el 30 %. La granada de estasis ralentiza al jugador si explota cerca y muestra una bruma azul mientras dura el efecto.
+- **Avisos de salud:** bajo el 40 % suena un latido que se acelera y aumenta de intensidad cuanto menor es la vida. Al recuperarla, se reproduce un zumbido grave, ascendente y de volumen bajo, con pausas entre repeticiones.
+- **Audio de acciones:** hay sonidos de disparo y recarga por arma, lanzamiento y explosión por tipo de granada, recogida de suministros/objetos y avisos distintos al quedarse sin balas o sin granadas.
 
 ## Base de datos SQLite
 
@@ -237,3 +263,9 @@ Las misiones finales incluyen defensa del hangar durante **120 s** con una carga
 atacable de **150 PV**, refuerzos agrupados y cuatro cajas de munición (nivel 8),
 y transporte de carga desde la sala inicial hasta la última, con tres cajas de
 munición y refuerzos durante el regreso/traslado (nivel 9).
+
+## INTEGRANTES
+
+- **Aguilera Correa Alexis Kaleb**
+- **Luquin Gonzalez Jose Ernesto**
+- **Hernandez Huizar Brian Abraham**
